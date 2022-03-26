@@ -1,0 +1,8 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - name: "Zhenchao Jin"
+title: "Pytoydl: A toy deep learning framework built upon numpy"
+date-released: 2022-03-26
+url: "https://github.com/CharlesPikachu/pytoydl"
+license: Apache-2.0
