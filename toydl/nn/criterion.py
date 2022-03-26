@@ -20,15 +20,14 @@ class MSELoss():
         self.storage.update({
             'preditions': preditions, 'targets': targets
         })
-        loss = (preditions - targets) ** 2
+        loss = 0.5 * (preditions - targets) ** 2
         if self.reduction == 'none': return loss
         loss = getattr(loss, self.reduction)()
         return loss
     '''定义反向传播'''
     def backward(self):
         gradient = self.storage['preditions'] - self.storage['targets']
-        while len(gradient.shape) > 1: 
-            gradient = gradient.mean(-1)
+        if self.reduction == 'mean': gradient /= gradient.shape[0]
         return gradient
 
 

@@ -19,7 +19,7 @@ class BaseOptimizer():
             if isinstance(module, dict):
                 self.applyupdate(module)
             else:
-                module.update = self.update
+                setattr(module, 'update', self.update)
     '''梯度更新函数'''
     def update(self, params, grads, direction):
         raise NotImplementedError('not to be implemented')

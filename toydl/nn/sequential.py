@@ -27,7 +27,7 @@ class Sequential(Module):
         return x
     '''反向传播'''
     def backward(self, accumulated_gradient):
-        for module in self.module_dict.values():
+        for module in reversed(list(self.module_dict.values())):
             accumulated_gradient = module.backward(accumulated_gradient)
         return accumulated_gradient
     '''返回参数数量'''
