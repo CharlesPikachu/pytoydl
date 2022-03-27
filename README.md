@@ -25,8 +25,10 @@ You can star this repository to keep track of the project if it's helpful for yo
 # Tutorial
 
 - [从零开始实现一个深度学习框架 | 打好基础篇](https://mp.weixin.qq.com/s/ROgnJ1FlpYBvg6aFTTo_Qw)
-- [从零开始实现一个深度学习框架 | 打造基础学习框架篇]() 
+- [从零开始实现一个深度学习框架 | 打造基础学习框架篇](https://mp.weixin.qq.com/s/7liDeTpMhft1a1P640x7_Q) 
 	- [本期实战案例相关代码](./examples/v0.0.1)
+- [从零开始实现一个深度学习框架 | 激活函数，损失函数与卷积层的推导与实现]()
+	- [本期实战案例相关代码](./examples/v0.0.2)
 
 
 # Install
