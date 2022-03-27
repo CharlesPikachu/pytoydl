@@ -14,3 +14,6 @@ from .sequential import (
 from .criterion import (
     MSELoss, CrossEntropy
 )
+from .activation import (
+    Softmax
+)

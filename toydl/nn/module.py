@@ -36,10 +36,17 @@ class Module():
         return self.__class__.__name__
     '''设置为训练状态'''
     def train(self, mode=True):
-        self.training = mode
+        def apply(module_dict, mode):
+            for module in module_dict.values():
+                if isinstance(module, dict):
+                    apply(module, mode)
+                else:
+                    setattr(module, 'training', mode)
+        module_dict = self.modules()
+        apply(module_dict, mode)
     '''设置为测试状态'''
     def eval(self):
-        self.training = False
+        self.train(mode=False)
     '''根据使用的优化器更新参数'''
     def update(self):
         raise NotImplementedError('not to be implemented')

@@ -33,19 +33,25 @@ class MSELoss():
 
 '''交叉熵损失'''
 class CrossEntropy():
-    def __init__(self, redution='mean', eps=1e-15):
+    def __init__(self, reduction='mean', eps=1e-12):
         assert reduction in ['sum', 'none', 'mean']
         self.reduction = reduction
         self.eps = eps
+        self.storage = {}
     '''定义前向传播'''
     def __call__(self, preditions, targets):
         self.storage.update({
             'preditions': preditions, 'targets': targets
         })
+        preditions = np.clip(preditions, self.eps, 1 - self.eps)
         loss = - targets * np.log(preditions) - (1 - targets) * np.log(1 - preditions)
         if self.reduction == 'none': return loss
         loss = getattr(loss, self.reduction)()
         return loss
     '''定义反向传播'''
     def backward(self):
-        pass
+        preditions, targets = self.storage['preditions'], self.storage['targets']
+        preditions = np.clip(preditions, self.eps, 1 - self.eps)
+        gradient = - (targets / preditions) + (1 - targets) / (1 - preditions)
+        if self.reduction == 'mean': gradient /= gradient.shape[0]
+        return gradient
