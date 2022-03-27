@@ -1,6 +1,6 @@
 '''
 Function:
-    setup the pytoydl
+    setup the toydl
 Author:
     Charles
 微信公众号:
@@ -8,7 +8,7 @@ Author:
 GitHub:
     https://github.com/CharlesPikachu
 '''
-import pytoydl
+import toydl
 from setuptools import setup, find_packages
 
 
@@ -19,9 +19,9 @@ with open('README.md', 'r', encoding='utf-8') as f:
 
 '''setup'''
 setup(
-    name=pytoydl.__title__,
-    version=pytoydl.__version__,
-    description=pytoydl.__description__,
+    name=toydl.__title__,
+    version=toydl.__version__,
+    description=toydl.__description__,
     long_description=long_description,
     long_description_content_type='text/markdown',
     classifiers=[
@@ -30,12 +30,12 @@ setup(
         'Intended Audience :: Developers',
         'Operating System :: OS Independent'
     ],
-    author=pytoydl.__author__,
-    url=pytoydl.__url__,
-    author_email=pytoydl.__email__,
-    license=pytoydl.__license__,
+    author=toydl.__author__,
+    url=toydl.__url__,
+    author_email=toydl.__email__,
+    license=toydl.__license__,
     include_package_data=True,
-    package_data=package_data,
+    package_data={},
     install_requires=list(open('requirements.txt', 'r').readlines()),
     zip_safe=True,
     packages=find_packages(),
