@@ -18,8 +18,9 @@ class Linear(Module):
             in_features=in_features, out_features=out_features, bias=True
         )
         # 初始化权重
+        thresh = 1 / math.sqrt(in_features)
         self.weight = np.random.uniform(
-            - 1 / math.sqrt(in_features), 1 / math.sqrt(in_features), (in_features, out_features)
+            -thresh, thresh, (in_features, out_features)
         )
         self.bias = np.zeros((1, out_features))
         # 初始化storage
