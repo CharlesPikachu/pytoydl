@@ -15,7 +15,7 @@ from .module import Module
 class Linear(Module):
     def __init__(self, in_features, out_features, bias=True):
         super(Linear, self).__init__(
-            in_features=in_features, out_features=out_features, bias=True
+            in_features=in_features, out_features=out_features, bias=bias
         )
         # 初始化权重
         thresh = 1 / math.sqrt(in_features)
