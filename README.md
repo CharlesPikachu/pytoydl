@@ -29,6 +29,8 @@ You can star this repository to keep track of the project if it's helpful for yo
 	- [本期实战案例相关代码](./examples/v0.0.1)
 - [从零开始实现一个深度学习框架 | 激活函数，损失函数与卷积层](https://mp.weixin.qq.com/s/R0EHL8mZplXrOjIycYzUnQ)
 	- [本期实战案例相关代码](./examples/v0.0.2)
+- [如何"科学地"拟合上海每日汇报的新增人数？](https://mp.weixin.qq.com/s/C9ecZTOoXpXKun7hvNmD3Q)
+	- [本期实战案例相关代码](./examples/coffee)
 
 
 # Install
