@@ -36,6 +36,10 @@ class Conv2d(Module):
             'direction': {
                 'weight': np.zeros(np.shape(self.weight)), 
                 'bias': np.zeros(np.shape(self.bias))
+            },
+            'direction_2x': {
+                'weight': np.zeros(np.shape(self.weight)), 
+                'bias': np.zeros(np.shape(self.bias))
             }
         })
     '''定义前向传播'''
@@ -55,11 +59,11 @@ class Conv2d(Module):
             grad_w = accumulated_gradient.dot(self.storage['x_cols'].T).reshape(self.weight.shape)
             grad_b = np.sum(accumulated_gradient, axis=1, keepdims=True)
             # 根据梯度更新weight
-            results = self.update(self.weight, grad_w, self.storage['direction']['weight'])
-            self.weight, self.storage['direction']['weight'] = results['params'], results['direction']
+            results = self.update(self.weight, grad_w, self.storage['direction']['weight'], self.storage['direction_2x']['weight'])
+            self.weight, self.storage['direction']['weight'], self.storage['direction_2x']['weight'] = results['params'], results['direction'], results['direction_2x']
             # 根据梯度更新bias
-            results = self.update(self.bias, grad_b, self.storage['direction']['bias'])
-            self.bias, self.storage['direction']['bias'] = results['params'], results['direction']
+            results = self.update(self.bias, grad_b, self.storage['direction']['bias'], self.storage['direction_2x']['bias'])
+            self.bias, self.storage['direction']['bias'], self.storage['direction_2x']['bias'] = results['params'], results['direction'], results['direction_2x']
         accumulated_gradient = self.storage['weight_cols'].T.dot(accumulated_gradient)
         accumulated_gradient = ImageConverter.col2im(accumulated_gradient, self.storage['x'].shape, self.kernel_size, self.stride, self.padding)
         return accumulated_gradient

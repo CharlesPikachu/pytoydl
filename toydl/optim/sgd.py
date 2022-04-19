@@ -19,9 +19,9 @@ class SGD(BaseOptimizer):
         # 所有网络层都使用优化器的update函数
         self.applyupdate(self.structure.modules())
     '''更新函数'''
-    def update(self, params, grads, direction):
+    def update(self, params, grads, direction, direction_2x):
         direction = self.momentum * direction + (1 - self.momentum) * grads
         params = params - self.learning_rate * direction
         return {
-            'params': params, 'direction': direction,
+            'params': params, 'direction': direction, 'direction_2x': direction_2x
         }

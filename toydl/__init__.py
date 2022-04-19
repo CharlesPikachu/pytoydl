@@ -8,7 +8,7 @@ from . import functional
 __title__ = 'pytoydl'
 __description__ = 'Pytoydl: A toy deep learning framework built upon numpy.'
 __url__ = 'https://github.com/CharlesPikachu/pytoydl'
-__version__ = '0.0.2'
+__version__ = '0.0.3'
 __author__ = 'Zhenchao Jin'
 __email__ = 'charlesblwx@gmail.com'
 __license__ = 'Apache License 2.0'
