@@ -33,6 +33,8 @@ You can star this repository to keep track of the project if it's helpful for yo
 	- [本期实战案例相关代码](./examples/coffee)
 - [从零开始实现一个深度学习框架 | 常用优化算法介绍与实现](https://mp.weixin.qq.com/s/idz3WKTgreetzQC6CzlSEQ)
 	- [本期实战案例相关代码](./examples/v0.0.3)
+- [从零开始实现一个深度学习框架 | 当神经网络遇上遗传算法]()
+	- [本期实战案例相关代码](./examples/nnmeetwithga)
 
 
 # Install
