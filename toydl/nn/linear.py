@@ -34,9 +34,14 @@ class Linear(Module):
                 'bias': np.zeros(np.shape(self.bias))
             },
         })
+        # 取消bias
+        if not bias: delattr(self, 'bias')
     '''定义前向传播'''
     def forward(self, x):
-        feats = x.dot(self.weight) + self.bias
+        if hasattr(self, 'bias'):
+            feats = x.dot(self.weight) + self.bias
+        else:
+            feats = x.dot(self.weight)
         return feats
     '''定义反向传播'''
     def backward(self, accumulated_gradient):
@@ -49,9 +54,12 @@ class Linear(Module):
             results = self.update(self.weight, grad_w, self.storage['direction']['weight'], self.storage['direction_2x']['weight'])
             self.weight, self.storage['direction']['weight'], self.storage['direction_2x']['weight'] = results['params'], results['direction'], results['direction_2x']
             # 根据梯度更新bias
-            results = self.update(self.bias, grad_b, self.storage['direction']['bias'], self.storage['direction_2x']['bias'])
-            self.bias, self.storage['direction']['bias'], self.storage['direction_2x']['bias'] = results['params'], results['direction'], results['direction_2x']
+            if hasattr(self, 'bias'):
+                results = self.update(self.bias, grad_b, self.storage['direction']['bias'], self.storage['direction_2x']['bias'])
+                self.bias, self.storage['direction']['bias'], self.storage['direction_2x']['bias'] = results['params'], results['direction'], results['direction_2x']
         return accumulated_gradient.dot(weight.T)
     '''返回参数数量'''
     def parameters(self):
-        return np.prod(self.weight.shape) + np.prod(self.bias.shape)
+        if hasattr(self, 'bias'):
+            return np.prod(self.weight.shape) + np.prod(self.bias.shape)
+        return np.prod(self.weight.shape)

@@ -42,13 +42,18 @@ class Conv2d(Module):
                 'bias': np.zeros(np.shape(self.bias))
             }
         })
+        # 取消bias
+        if not bias: delattr(self, 'bias')
     '''定义前向传播'''
     def forward(self, x):
         batch_size, num_channels, h, w = x.shape
         x_cols = ImageConverter.im2col(x, self.kernel_size, self.stride, self.padding)
         weight_cols = self.weight.reshape((self.out_channels, -1))
         self.storage.update({'x_cols': x_cols, 'weight_cols': weight_cols})
-        feats = weight_cols.dot(x_cols) + self.bias
+        if hasattr(self, 'bias'):
+            feats = weight_cols.dot(x_cols) + self.bias
+        else:
+            feats = weight_cols.dot(x_cols)
         feats = feats.reshape(self.outputsize(x)[1:] + (batch_size,)).transpose(3, 0, 1, 2)
         return feats
     '''定义反向传播'''
@@ -62,14 +67,17 @@ class Conv2d(Module):
             results = self.update(self.weight, grad_w, self.storage['direction']['weight'], self.storage['direction_2x']['weight'])
             self.weight, self.storage['direction']['weight'], self.storage['direction_2x']['weight'] = results['params'], results['direction'], results['direction_2x']
             # 根据梯度更新bias
-            results = self.update(self.bias, grad_b, self.storage['direction']['bias'], self.storage['direction_2x']['bias'])
-            self.bias, self.storage['direction']['bias'], self.storage['direction_2x']['bias'] = results['params'], results['direction'], results['direction_2x']
+            if hasattr(self, 'bias'):
+                results = self.update(self.bias, grad_b, self.storage['direction']['bias'], self.storage['direction_2x']['bias'])
+                self.bias, self.storage['direction']['bias'], self.storage['direction_2x']['bias'] = results['params'], results['direction'], results['direction_2x']
         accumulated_gradient = self.storage['weight_cols'].T.dot(accumulated_gradient)
         accumulated_gradient = ImageConverter.col2im(accumulated_gradient, self.storage['x'].shape, self.kernel_size, self.stride, self.padding)
         return accumulated_gradient
     '''返回参数数量'''
     def parameters(self):
-        return np.prod(self.weight.shape) + np.prod(self.bias.shape)
+        if hasattr(self, 'bias'):
+            return np.prod(self.weight.shape) + np.prod(self.bias.shape)
+        return np.prod(self.weight.shape)
     '''特征输出大小'''
     def outputsize(self, inp):
         batch_size, num_channels, h, w = inp.shape
