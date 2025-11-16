@@ -36,7 +36,7 @@ setup(
     license=toydl.__license__,
     include_package_data=True,
     package_data={},
-    install_requires=list(open('requirements.txt', 'r').readlines()),
+    install_requires=[lab.strip('\n') for lab in list(open('requirements.txt', 'r').readlines())],
     zip_safe=True,
     packages=find_packages(),
 )
